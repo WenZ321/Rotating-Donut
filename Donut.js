@@ -8,7 +8,7 @@
   // ======================
   // DONUT
   // ======================
-  // R: distance from torus center to the center of the tube
+  // R: distance from donut center to the center of the tube
   // r: radius of the tube
   // stepsPhi: subdivisions around the tube itself
   // stepsTheta: subdivisions around the central hole
@@ -25,16 +25,16 @@
   // =================================
   // Generating Donut
   // =================================
-  // We'll store them in a 2D array: torusPoints[phiIndex][thetaIndex] = [x, y, z]
+  // We'll store them in a 2D array: donutPoints[phiIndex][thetaIndex] = [x, y, z]
   // Parametric equations for a torus:
   //   x = (R + r*cos(phi))*cos(theta)
   //   y = (R + r*cos(phi))*sin(theta)
   //   z = r*sin(phi)
   // where phi goes around the small tube, and theta goes around the central hole.
-  let torusPoints = new Array(stepsPhi);
+  let donutPoints = new Array(stepsPhi);
   for (let i = 0; i < stepsPhi; i++) {
     // Create the inner array for each phi step
-    torusPoints[i] = new Array(stepsTheta);
+    donutPoints[i] = new Array(stepsTheta);
     
     // phi is the angle for the circular cross section of the tube
     const phi = (i / stepsPhi) * 2 * Math.PI;
@@ -42,18 +42,18 @@
     const sinPhi = Math.sin(phi);
 
     for (let j = 0; j < stepsTheta; j++) {
-      // theta is the angle around the torus's central hole
+      // theta is the angle around the donut's central hole
       const theta = (j / stepsTheta) * 2 * Math.PI;
       const cosTheta = Math.cos(theta);
       const sinTheta = Math.sin(theta);
 
-      // Calculate 3D coordinates using the torus parametric formula
+      // Calculate 3D coordinates using the donut parametric formula
       const x = (R + r * cosPhi) * cosTheta;
       const y = (R + r * cosPhi) * sinTheta;
       const z = r * sinPhi;
 
       // Store the 3D point
-      torusPoints[i][j] = [x, y, z];
+      donutPoints[i][j] = [x, y, z];
     }
   }
 
@@ -71,7 +71,7 @@
   }
 
   /**
-   * Draw the torus at a given rotation angle.
+   * Draw the donut at a given rotation angle.
    * @param {number} angle - Current rotation angle in radians.
    */
   function draw(angle) {
@@ -82,7 +82,7 @@
     // ROTATION 
     // ======================
     // Composition of rotating around Y and then around X
-    // We'll apply it to every torus vertex.
+    // We'll apply it to every donut vertex.
     const rotationMatrix = multiplyMatrix(rotationY(angle),rotationX(angle));
 
     // Array to hold the 2D coordinates of the projected points after they've been rotated and projected.
@@ -94,7 +94,7 @@
       
       for (let j = 0; j < stepsTheta; j++) {
 
-        const pt3D = torusPoints[i][j];
+        const pt3D = donutPoints[i][j];
 
         // Rotate the point using our rotation matrix
         const rotated = multiplyMatrixVector(rotationMatrix, pt3D);
@@ -120,7 +120,7 @@
     // ================================
     // DRAWING DONUTT
     // ================================
-    ctx.strokeStyle = "#ADD8E6"; // Color of donut 
+    ctx.strokeStyle = "#FF0000"; // Color of donut 
     
     // For each point, connect it to its neighbors in phi and theta directions to form a grid
     for (let i = 0; i < stepsPhi; i++) {
