@@ -23,7 +23,7 @@
   const focalLength = 1000;
 
   // =================================
-  // GENERATE THE TORUS POINTS IN 3D
+  // Generating Donut
   // =================================
   // We'll store them in a 2D array: torusPoints[phiIndex][thetaIndex] = [x, y, z]
   // Parametric equations for a torus:
