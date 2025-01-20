@@ -120,7 +120,7 @@
     // ================================
     // DRAWING DONUTT
     // ================================
-    ctx.strokeStyle = "#0f0"; // set line color to green
+    ctx.strokeStyle = "#ADD8E6"; // Color of donut 
     
     // For each point, connect it to its neighbors in phi and theta directions to form a grid
     for (let i = 0; i < stepsPhi; i++) {
